@@ -1,0 +1,28 @@
+CREATE KEYSPACE IF NOT EXISTS lumenkeyspace
+WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+
+CREATE USER 'admin' WITH PASSWORD 'admin123' NOSUPERUSER;
+GRANT ALL PERMISSIONS ON ALL KEYSPACES TO 'admin';
+
+use lumenkeyspace;
+
+CREATE TABLE IF NOT EXISTS users (
+    mobileNo TEXT PRIMARY KEY,
+);
+
+CREATE TABLE IF NOT EXISTS contacts (
+    mobileNo TEXT,
+    contactMobileNo TEXT,
+    conversationKey TEXT,
+    PRIMARY KEY (mobileNo)
+);
+
+CREATE TABLE IF NOT EXISTS messages (
+    messageId TEXT,
+    conversationKey TEXT,
+    sender TEXT,
+    receiver TEXT,
+    message TEXT,
+    timestamp TIMESTAMP,
+    PRIMARY KEY (conversationKey, timestamp)
+);
